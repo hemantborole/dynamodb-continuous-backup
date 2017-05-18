@@ -15,6 +15,7 @@ import json
 cwe_client = None
 lambda_client = None
 version = '1.2'
+
 LAMBDA_FUNCTION_NAME = 'EnsureDynamoBackup'
 DDB_CREATE_DELETE_RULE_NAME = 'DynamoDBCreateDelete'
 
@@ -22,7 +23,7 @@ DDB_CREATE_DELETE_RULE_NAME = 'DynamoDBCreateDelete'
 def configure_cwe(region, cwe_role_arn):
     # connect to CloudWatch Logs
     global cwe_client
-    cwe_client = boto3.client('events', region_name=region)
+    cwe_client = session.client('events', region_name=region)
     
     # determine if there's an existing rule in place
     rule_query_response = {}
@@ -58,7 +59,7 @@ def configure_cwe(region, cwe_role_arn):
 def deploy_lambda_function(region, lambda_role_arn, cwe_rule_arn, force):
     # connect to lambda
     global lambda_client
-    lambda_client = boto3.client('lambda', region_name=region)
+    lambda_client = session.client('lambda', region_name=region)
     
     deployment_zip = open('../dist/dynamodb_continuous_backup-%s.zip' % (version), 'rb')
     deployment_contents = deployment_zip.read()
@@ -177,7 +178,7 @@ def configure_backup(region, cwe_role_arn, lambda_role_arn, redeploy_lambda):
     create_lambda_cwe_target(lambda_arn)
 
 
-
+global session
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()    
     parser.add_argument("--config-file", dest='config_file', action='store', required=False, help="Enter the path to the JSON or HJSON configuration file")
@@ -185,8 +186,11 @@ if __name__ == "__main__":
     parser.add_argument("--cw_role_arn", dest='cw_role_arn', action='store', required=False, help="The CloudWatch Events Role ARN")
     parser.add_argument("--lambda_role_arn", dest='lambda_role_arn', action='store', required=False, help="The Lambda Execution Role ARN")
     parser.add_argument("--redeploy", dest='redeploy', action='store_true', required=False, help="Redeploy the Lambda function?")    
+    parser.add_argument("--profile", required=True, help="Profile name for AWS Credentials")    
     args = parser.parse_args()
         
+    session = boto3.Session(profile_name = args.profile, region_name = args.region)
+
     if args.config_file != None:
         # load the configuration file
         config = hjson.load(open(args.config_file, 'r'))

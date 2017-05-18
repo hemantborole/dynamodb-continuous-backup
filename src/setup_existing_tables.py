@@ -10,15 +10,27 @@ sys.path.append('lib')
 
 import dynamo_continuous_backup
 import boto3
+import argparse
 import os
 import hjson
 
 REGION_KEY = 'AWS_REGION'
 dynamo_client = None
 
+
+global session
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()    
+    parser.add_argument("--region", dest='region', action='store', required=False, help="Enter the destination region")
+    parser.add_argument("--profile", required=True, help="Profile name for AWS Credentials")    
+    parser.add_argument("--table-list", required=True, help="List of tables to whitelist")    
+    args = parser.parse_args()
+
 def init():
     try:
-        current_region = os.environ[REGION_KEY]
+        #current_region = os.environ[REGION_KEY]
+        current_region = args.region
+        os.environ[REGION_KEY] = args.region
     
         if current_region == None or current_region == '':
             raise KeyError
@@ -26,7 +38,9 @@ def init():
         raise Exception("Unable to resolve environment variable %s" % REGION_KEY)
     
     global dynamo_client
-    dynamo_client = boto3.client('dynamodb', region_name=current_region)
+    
+    session = boto3.Session(profile_name = args.profile, region_name = args.region)
+    dynamo_client = session.client('dynamodb', region_name=current_region)
     
     
 def resolve_table_list(config_file):
@@ -85,7 +99,9 @@ def deprovision(table_whitelist):
     deprovision_tables(table_list)
         
         
-def provision(table_whitelist):
+#def provision(table_whitelist):
+def provision():
+    table_whitelist = args.table_list
     init()
     
     table_list = resolve_table_list(table_whitelist)
@@ -93,3 +109,6 @@ def provision(table_whitelist):
     dynamo_continuous_backup.init(None)
         
     provision_tables(table_list)
+
+
+provision()
