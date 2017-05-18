@@ -1,5 +1,5 @@
 * pip install --upgrade boto3 awscli hjson shortuuid
-* Use updated source code from https://git.gbl.experiancs.com/hborole/dynamodb-continuous-backup
+* Use updated source code from https://github.com/hemantborole/dynamodb-continuous-backup.git
 * Create Roles
     * CloudWatchEventsRole - CloudWatch Events from CloudWatchEventsInvocationAccess - events.amazonaws.com
         file cloudwatchevents_role.json
