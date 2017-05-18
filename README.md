@@ -1,3 +1,5 @@
+# See SETUP.md for deployment instructions.
+
 # DynamoDB Continuous Backup Utility
 
 Amazon DynamoDB is a fast and flexible NoSQL database service for all applications that need consistent, single-digit millisecond latency at any scale. For data durability, Tables are automatically distributed across 3 facilities in an AWS Region of your choice, and ensure continous operation even in the case of AZ level interruption of service.
