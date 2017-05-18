@@ -1,36 +1,34 @@
 {
-    "Version": "2012-10-17",
+  "Version": "2012-10-17",
     "Statement": [
-        {
-            "Sid": "Stmt1444729748000",
-            "Effect": "Allow",
-            "Action": [
-                "firehose:CreateDeliveryStream",
-                "firehose:DescribeDeliveryStream",
-                "firehose:ListDeliveryStreams",
-                "firehose:PutRecord",
-                "firehose:PutRecordBatch",
-                "dynamodb:DescribeStream",
-                "dynamodb:DescribeTable",
-                "dynamodb:GetRecords",
-                "dynamodb:GetShardIterator",
-                "dynamodb:ListStreams",
-                "dynamodb:ListTables",
-                "dynamodb:UpdateTable",
-                "logs:CreateLogGroup",
-              "logs:CreateLogStream",
-              "logs:PutLogEvents",
-              "lambda:CreateFunction",
-                "lambda:CreateEventSourceMapping",
-              "lambda:ListEventSourceMappings",
-              "lambda:InvokeFunction",
-              "iam:passrole",
-                "s3:Get*",
-                "s3:List*"
-            ],
-            "Resource": [
-                "*"
-            ]
-        }
-    ]
+    {
+      "Sid": "Stmt1444729748000",
+      "Effect": "Allow",
+      "Action": [
+        "firehose:CreateDeliveryStream",
+        "firehose:DescribeDeliveryStream",
+        "firehose:ListDeliveryStreams",
+        "firehose:PutRecord",
+        "firehose:PutRecordBatch",
+        "dynamodb:DescribeStream",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:ListStreams",
+        "dynamodb:ListTables",
+        "dynamodb:UpdateTable",
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "lambda:CreateFunction",
+        "lambda:CreateEventSourceMapping",
+        "lambda:ListEventSourceMappings",
+        "lambda:InvokeFunction",
+        "iam:passrole",
+        "s3:Get*",
+        "s3:List*"
+      ],
+      "Resource": [ "*" ]
+    }
+  ]
 }
