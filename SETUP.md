@@ -13,8 +13,8 @@
   ```
   cd src
   ./build.sh config.hjson
-  This creates ../dist/dynamodb_continuous_backup-1.1.zip
   ```
+  This creates ../dist/dynamodb_continuous_backup-1.1.zip
 * Execute deploy.py
   ```
   cd src
